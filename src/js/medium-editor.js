@@ -102,7 +102,8 @@ if (typeof module === 'object') {
             forcePlainText: true,
             placeholder: 'Type your text',
             secondHeader: 'h4',
-            targetBlank: false
+            targetBlank: false,
+            defaultElement: 'p'
         },
 
         init: function (elements, options) {
@@ -132,7 +133,8 @@ if (typeof module === 'object') {
                 }
 
                 if (!this.elements[i].getAttribute('data-element')) {
-                    element = 'p';
+                    this.elements[i].setAttribute('data-element', this.options.defaultElement);
+                    element = this.options.defaultElement;
                 } else {
                     element = this.elements[i].getAttribute('data-element');
                 }
