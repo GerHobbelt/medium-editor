@@ -129,8 +129,16 @@ if (typeof module === 'object') {
                 if (!this.elements[i].getAttribute('data-placeholder')) {
                     this.elements[i].setAttribute('data-placeholder', this.options.placeholder);
                 }
+
+                var element;
+                if(!this.elements[i].getAttribute('data-element')) {
+                    element = 'p';
+                } else {
+                    element = this.elements[i].getAttribute('data-element');
+                }
+
                 this.elements[i].setAttribute('data-medium-element', true);
-                this.bindParagraphCreation(i).bindReturn(i).bindTab(i);
+                this.bindParagraphCreation(i, element).bindReturn(i).bindTab(i);
                 if (!this.options.disableToolbar && !this.elements[i].getAttribute('data-disable-toolbar')) {
                     addToolbar = true;
                 }
@@ -157,21 +165,21 @@ if (typeof module === 'object') {
             return content;
         },
 
-        bindParagraphCreation: function (index) {
+        bindParagraphCreation: function (index, element) {
             var self = this;
             this.elements[index].addEventListener('keyup', function (e) {
                 var node = getSelectionStart(),
                     tagName;
                 if (node && node.getAttribute('data-medium-element') && node.children.length === 0 &&
                         !(self.options.disableReturn || node.getAttribute('data-disable-return'))) {
-                    document.execCommand('formatBlock', false, 'p');
+                    document.execCommand('formatBlock', false, element);
                 }
                 if (e.which === 13 && !e.shiftKey) {
                     node = getSelectionStart();
                     tagName = node.tagName.toLowerCase();
                     if (!(self.options.disableReturn || this.getAttribute('data-disable-return')) &&
                             tagName !== 'li' && !self.isListItemChild(node)) {
-                        document.execCommand('formatBlock', false, 'p');
+                        document.execCommand('formatBlock', false, element);
                         if (tagName === 'a') {
                             document.execCommand('unlink', false, null);
                         }
