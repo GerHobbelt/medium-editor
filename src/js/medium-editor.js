@@ -103,7 +103,7 @@ if (typeof module === 'object') {
             placeholder: 'Type your text',
             secondHeader: 'h4',
             targetBlank: false,
-            defaultElement: 'p'
+            element: 'p'
         },
 
         init: function (elements, options) {
@@ -133,8 +133,8 @@ if (typeof module === 'object') {
                 }
 
                 if (!this.elements[i].getAttribute('data-element')) {
-                    this.elements[i].setAttribute('data-element', this.options.defaultElement);
-                    element = this.options.defaultElement;
+                    this.elements[i].setAttribute('data-element', this.options.element);
+                    element = this.options.element;
                 } else {
                     element = this.elements[i].getAttribute('data-element');
                 }
