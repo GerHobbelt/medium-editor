@@ -123,6 +123,7 @@ if (typeof module === 'object') {
 
         initElements: function () {
             var i,
+                element,
                 addToolbar = false;
             for (i = 0; i < this.elements.length; i += 1) {
                 this.elements[i].setAttribute('contentEditable', true);
@@ -130,8 +131,7 @@ if (typeof module === 'object') {
                     this.elements[i].setAttribute('data-placeholder', this.options.placeholder);
                 }
 
-                var element;
-                if(!this.elements[i].getAttribute('data-element')) {
+                if (!this.elements[i].getAttribute('data-element')) {
                     element = 'p';
                 } else {
                     element = this.elements[i].getAttribute('data-element');
