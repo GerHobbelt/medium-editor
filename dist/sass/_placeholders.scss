@@ -1,0 +1,17 @@
+// @import this file into your scss
+// only works if styles for each are defined
+// ie: bootstrap
+
+$elements: p, h1, h2, h3, h4, h5, h6, blockquote, pre;
+
+.angular-medium-editor {
+    &:focus {
+        outline: none;
+    }
+
+    @each $el in $elements {
+        &[data-element="#{$el}"] {
+            @extend #{$el};
+        }
+    }
+}
