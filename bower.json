@@ -1,9 +1,10 @@
 {
   "name": "medium-editor",
-  "version": "1.5.6",
-  "homepage": "http://daviferreira.github.io/medium-editor/",
+  "version": "1.5.7",
+  "homepage": "http://github.com/slapner/medium-editor/",
   "authors": [
-    "Davi Ferreira <hi@daviferreira.com>"
+    "Davi Ferreira <hi@daviferreira.com>",
+    "Brian Clapner <brian@clapner.name>"
   ],
   "description": "Medium.com WYSIWYG editor clone written in pure JavaScript.",
   "main": ["dist/js/medium.editor.js", "dist/js/medium.editor.min.js",
