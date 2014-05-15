@@ -117,9 +117,6 @@
   font-style: normal;
   cursor: pointer; }
   
-.medium-editor-anchor-has-error {
-  border: 1px solid red;}
-
 .medium-editor-toolbar-active, .medium-editor-anchor-preview-active {
   visibility: visible;
   -webkit-animation: pop-upwards 160ms forwards linear;

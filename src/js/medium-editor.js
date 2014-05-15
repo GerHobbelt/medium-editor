@@ -462,10 +462,12 @@ if (typeof module === 'object') {
                 i;
 
             this.checkSelectionWrapper = function (e) {
+
                 // Do not close the toolbar when bluring the editable area and clicking into the anchor form
                 if (e && self.clickingIntoArchorForm(e)) {
                     return false;
                 }
+
                 clearTimeout(timer);
                 timer = setTimeout(function () {
                     self.checkSelection();
@@ -767,8 +769,6 @@ if (typeof module === 'object') {
 
         hideToolbarActions: function () {
             this.keepToolbarAlive = false;
-            this.anchorInput.value = '';
-            this.anchorForm.classList.remove('medium-editor-anchor-has-error');
             if (this.toolbar !== undefined) {
                 this.toolbar.classList.remove('medium-editor-toolbar-active');
             }
@@ -776,24 +776,16 @@ if (typeof module === 'object') {
 
         showToolbarActions: function () {
             var self = this,
-                timer;            
-            if (this.options.checkLinkFormat &&
-                this.anchorForm.classList.contains('medium-editor-anchor-has-error')
-                ) {
-                this.anchorInput.focus();
-            }
-            else {
-                this.anchorForm.style.display = 'none';
-                this.anchorForm.classList.remove('medium-editor-anchor-has-error');
-                this.toolbarActions.style.display = 'block';
-                this.keepToolbarAlive = false;
-                clearTimeout(timer);
-                timer = setTimeout(function () {
-                    if (self.toolbar && !self.toolbar.classList.contains('medium-editor-toolbar-active')) {
-                        self.toolbar.classList.add('medium-editor-toolbar-active');
-                    }
-                }, 100);
-            }
+                timer;
+            this.anchorForm.style.display = 'none';
+            this.toolbarActions.style.display = 'block';
+            this.keepToolbarAlive = false;
+            clearTimeout(timer);
+            timer = setTimeout(function () {
+                if (self.toolbar && !self.toolbar.classList.contains('medium-editor-toolbar-active')) {
+                    self.toolbar.classList.add('medium-editor-toolbar-active');
+                }
+            }, 100);
         },
 
         showAnchorForm: function (link_value) {
@@ -836,7 +828,6 @@ if (typeof module === 'object') {
 
 
         hideAnchorPreview: function () {
-            this.anchorForm.classList.remove('medium-editor-anchor-has-error');
             this.anchorPreview.classList.remove('medium-editor-anchor-preview-active');
         },
 
@@ -1013,16 +1004,11 @@ if (typeof module === 'object') {
         },
 
         checkLinkFormat: function (value) {
-            var re = /^((http|https)?:\/\/)?([\da-z\.\-]+)\.([a-z\.]{2,6})([\/\w \.\-]*)*\/?$/; 
+            var re = /^https?:\/\//;
             if (value.match(re)) {
-                this.anchorForm.classList.remove('medium-editor-anchor-has-error');            
-                if (value.match(/^https?:\/\//)) {
-                    return value;
-                }
-                return "http://" + value ;
+                return value;
             }
-            this.anchorForm.classList.add('medium-editor-anchor-has-error');            
-            return value;
+            return "http://" + value;
         },
 
         setTargetBlank: function () {
@@ -1039,19 +1025,21 @@ if (typeof module === 'object') {
         },
 
         createLink: function (input) {
+            if (input.value.trim().length === 0) {
+                this.hideToolbarActions();
+                return;
+            }
+            restoreSelection(this.savedSelection);
             if (this.options.checkLinkFormat) {
                 input.value = this.checkLinkFormat(input.value);
             }
-            if (!this.anchorForm.classList.contains('medium-editor-anchor-has-error')) {
-                restoreSelection(this.savedSelection);
-                document.execCommand('createLink', false, input.value);
-                if (this.options.targetBlank) {
-                    this.setTargetBlank();
-                }
-                this.checkSelection();
-                this.showToolbarActions();
-                input.value = '';
+            document.execCommand('createLink', false, input.value);
+            if (this.options.targetBlank) {
+                this.setTargetBlank();
             }
+            this.checkSelection();
+            this.showToolbarActions();
+            input.value = '';
         },
 
         bindWindowActions: function () {
