@@ -124,6 +124,7 @@ else if (typeof define === 'function' && define.amd) {
             diffTop: -10,
             disableReturn: false,
             disableDoubleReturn: false,
+            insertHrOnDoubleReturn: false,
             disableToolbar: false,
             disableEditing: false,
             elementsContainer: false,
@@ -330,13 +331,22 @@ else if (typeof define === 'function' && define.amd) {
         bindReturn: function (index) {
             var self = this;
             this.elements[index].addEventListener('keypress', function (e) {
+                var disableDoubleReturn = self.options.disableReturn
+                                       || this.getAttribute('data-disable-return');
+                var insertHrOnDoubleReturn = self.options.insertHrOnDoubleReturn
+                                          || this.getAttribute('data-insert-hr-on-double-return');
+
                 if (e.which === 13) {
                     if (self.options.disableReturn || this.getAttribute('data-disable-return')) {
                         e.preventDefault();
-                    } else if (self.options.disableDoubleReturn || this.getAttribute('data-disable-double-return')) {
+                    } else if (disableDoubleReturn || insertHrOnDoubleReturn) {
                         var node = getSelectionStart();
                         if (node && node.innerText === '\n') {
-                            e.preventDefault();
+                            e.preventDefault()
+                            if (insertHrOnDoubleReturn) {
+                                document.execCommand('insertHorizontalRule');
+                                document.execCommand('insertParagraph');
+                            }
                         }
                     }
                 }
