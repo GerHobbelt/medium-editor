@@ -1,5 +1,10 @@
 /*global module, console, define*/
 
+/* Local Variables: */
+/* js3-indent-level: 4 */
+/* End: */
+
+
 function MediumEditor(elements, options) {
     'use strict';
     return this.init(elements, options);
@@ -103,6 +108,16 @@ else if (typeof define === 'function' && define.amd) {
             }
         }
         return html;
+    }
+
+    function precededByHr(node) {
+        var prev = node.previousSibling;
+        while (prev !== null) {
+            if (prev.tagName.toUpperCase() === 'HR')  return true;
+            if (prev.innerText.trim() !== '')  return false;
+            prev = prev.previousSibling;
+        }
+        return false;
     }
 
     // https://github.com/jashkenas/underscore
@@ -343,7 +358,7 @@ else if (typeof define === 'function' && define.amd) {
                         var node = getSelectionStart();
                         if (node && node.innerText === '\n') {
                             e.preventDefault()
-                            if (insertHrOnDoubleReturn) {
+                            if (insertHrOnDoubleReturn && !precededByHr(node)) {
                                 document.execCommand('insertHorizontalRule');
                                 document.execCommand('insertParagraph');
                             }
