@@ -27,6 +27,7 @@ module.exports = function (grunt) {
             'src/js/extensions/file-dragging.js',
             'src/js/extensions/keyboard-commands.js',
             'src/js/extensions/fontsize.js',
+            'src/js/extensions/icon.js',
             'src/js/extensions/paste.js',
             'src/js/extensions/placeholder.js',
             'src/js/extensions/toolbar.js',
