@@ -13,3 +13,4 @@ coverage/
 
 #PhpStorm IDE
 .idea/
+bower_components
