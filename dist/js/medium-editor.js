@@ -6165,6 +6165,9 @@ LINK_REGEXP_TEXT =
                 case 'icon':
                     extension = new MediumEditor.extensions.icon(opts);
                     break;
+                case 'colorPicker':
+                    extension = new MediumEditor.extensions.colorPicker(opts);
+                    break;
                 default:
                     // All of the built-in buttons for MediumEditor are extensions
                     // so check to see if the extension we're creating is a built-in button
