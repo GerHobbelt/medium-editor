@@ -107,11 +107,12 @@
             input.setAttribute('type', 'text');
             input.className = 'medium-editor-toolbar-input editor-colorpicker-input color{pickerClosable:true, pickerPosition:\'left\', onImmediateChange:\'window.handleColorChange(this)\'}';
             input.id = 'color_picker_' + this.getEditorId();
+            input.value = 'fffaed';
             form.appendChild(input);
 
             var self = this;
-            window.handleColorChange = function(color) {
-                self.handleColorChange(color.toString());
+            window.handleColorChange = function(editor) {
+                self.handleColorChange(editor);
             };
 
             // Add save buton
@@ -149,8 +150,8 @@
           // Do something
         },
 
-        handleColorChange: function (color) {
-            this.getInput().value = color;
+        handleColorChange: function (editor) {
+            editor.valueElement.value = editor.toString();
             this.handleCloseClick.bind(this);
             this.doFormSave();
 
