@@ -54,6 +54,7 @@
             this.getForm().style.display = 'block';
             this.setToolbarPosition();
 
+            jscolor.dir = '/img/';
             jscolor.init();
 
             input.value = color || '';
