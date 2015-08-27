@@ -21,7 +21,7 @@
 
             if (!this.isDisplayed()) {
                 // Get fontsize of current selection (convert to string since IE returns this as number)
-                var fontSize = this.document.queryCommandValue('fontSize') + '';
+                var fontSize = window.getComputedStyle(this.getEditorElements()[0]).fontSize.replace('px', '');
                 this.showForm(fontSize);
             }
 
@@ -80,7 +80,6 @@
 
         doFormCancel: function () {
             this.base.restoreSelection();
-            this.clearFontSize();
             this.base.checkSelection();
         },
 
@@ -101,8 +100,8 @@
 
             // Add font size slider
             input.setAttribute('type', 'range');
-            input.setAttribute('min', '1');
-            input.setAttribute('max', '7');
+            input.setAttribute('min', '9');
+            input.setAttribute('max', '120');
             input.className = 'medium-editor-toolbar-input';
             form.appendChild(input);
 
@@ -138,20 +137,16 @@
             return this.getForm().querySelector('input.medium-editor-toolbar-input');
         },
 
-        clearFontSize: function () {
-            MediumEditor.selection.getSelectedElements(this.document).forEach(function (el) {
-                if (el.nodeName.toLowerCase() === 'font' && el.hasAttribute('size')) {
-                    el.removeAttribute('size');
-                }
-            });
-        },
-
         handleSliderChange: function () {
             var size = this.getInput().value;
-            if (size === '4') {
-                this.clearFontSize();
-            } else {
-                this.execAction('fontSize', { size: size });
+            this.execAction('fontSize', { size: 7 });
+
+            var fontElements = document.getElementsByTagName("font");
+            for (var i = 0, len = fontElements.length; i < len; ++i) {
+                if (fontElements[i].size == "7") {
+                    fontElements[i].removeAttribute("size");
+                    fontElements[i].style.fontSize = size + "px";
+                }
             }
         },
 
