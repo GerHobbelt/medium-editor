@@ -4618,6 +4618,7 @@ LINK_REGEXP_TEXT =
                 form = doc.createElement('div'),
                 input = doc.createElement('input'),
                 close = doc.createElement('a'),
+                remove = doc.createElement('a'),
                 save = doc.createElement('a'),
                 ul = doc.createElement('ul'),
                 iconList = ['fa-cog', 'fa-puzzle-piece', 
@@ -4670,6 +4671,17 @@ LINK_REGEXP_TEXT =
             // Handle close button clicks
             this.on(close, 'click', this.handleCloseClick.bind(this));
 
+            // Add remove button
+            remove.setAttribute('href', '#');
+            remove.className = 'medium-editor-toobar-remove';
+            remove.innerHTML = this.getEditorOption('buttonLabels') === 'fontawesome' ?
+                              '<i class="fa fa-eraser"></i>' :
+                              'Retirer';
+            form.appendChild(remove);
+
+            // Handle remove button clicks
+            this.on(remove, 'click', this.handleRemoveClick.bind(this));
+
             return form;
         },
 
@@ -4707,6 +4719,13 @@ LINK_REGEXP_TEXT =
 
         handleCloseClick: function (event) {
             // Click Close -> close the form
+            event.preventDefault();
+            this.doFormCancel();
+        },
+
+        handleRemoveClick: function (event) {
+            // Click Remove
+            this.handleIconChange('none');
             event.preventDefault();
             this.doFormCancel();
         }
@@ -7052,7 +7071,7 @@ MediumEditor.parseVersionString = function (release) {
 
 MediumEditor.version = MediumEditor.parseVersionString.call(this, ({
     // grunt-bump looks for this:
-    'version': '5.6.13'
+    'version': '5.6.14'
 }).version);
 
     return MediumEditor;
