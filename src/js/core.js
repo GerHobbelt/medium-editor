@@ -697,6 +697,10 @@
                     merged = MediumEditor.util.extend({}, this.options.anchor, opts);
                     extension = new MediumEditor.extensions.anchor(merged);
                     break;
+                case 'anchorDocument':
+                    merged = MediumEditor.util.extend({}, this.options.anchorDocument, opts);
+                    extension = new MediumEditor.extensions.anchorDocument(merged);
+                    break;
                 case 'anchor-preview':
                     extension = new MediumEditor.extensions.anchorPreview(this.options.anchorPreview);
                     break;
