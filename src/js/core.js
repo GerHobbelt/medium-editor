@@ -1007,6 +1007,10 @@
                         if (opts.buttonClass) {
                             MediumEditor.util.addClassToAnchors(MediumEditor.selection.getSelectionStart(this.options.ownerDocument), opts.buttonClass);
                         }
+
+                        if(opts.documentId) {
+                            MediumEditor.util.addDocumentIdToAnchors(MediumEditor.selection.getSelectionStart(this.options.ownerDocument), opts.documentId);
+                        }
                     }
                 }
                 // Fire input event for backwards compatibility if anyone was listening directly to the DOM input event

@@ -464,6 +464,19 @@
             }
         },
 
+        addDocumentIdToAnchors: function (el, id) {
+                var i,j;
+
+            if (el.nodeName.toLowerCase() === 'a') {
+                el.setAttribute('data-external', 'bcm://document?id=' + id);
+            } else {
+                el = el.getElementsByTagName('a');
+                for (i = 0; i < el.length; i += 1) {
+                    el[i].setAttribute('data-external', 'bcm://document?id=' + id);
+                }
+            }
+        },
+
         isListItem: function (node) {
             if (!node) {
                 return false;

@@ -119,8 +119,15 @@
         },
 
         handleClick: function (event) {
-            var anchorExtension = this.base.getExtensionByName('anchor'),
-                activeAnchor = this.activeAnchor;
+
+            var activeAnchor = this.activeAnchor;
+
+            var extensionName = 'anchor';
+            if(activeAnchor.getAttribute('data-external')) {
+              extensionName = 'anchorDocument';
+            }
+            var anchorExtension = this.base.getExtensionByName(extensionName);
+                
 
             if (anchorExtension && activeAnchor) {
                 event.preventDefault();
@@ -134,7 +141,8 @@
                         var opts = {
                             url: activeAnchor.attributes.href.value,
                             target: activeAnchor.getAttribute('target'),
-                            buttonClass: activeAnchor.getAttribute('class')
+                            buttonClass: activeAnchor.getAttribute('class'),
+                            documentId: activeAnchor.attributes.href.value
                         };
                         anchorExtension.showForm(opts);
                         activeAnchor = null;
