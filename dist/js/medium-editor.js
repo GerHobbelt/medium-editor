@@ -6341,12 +6341,13 @@ LINK_REGEXP_TEXT =
             editor.valueElement.value = editor.toString();
             var elementId = 'bullet_color_' + editor.toString();
             targetElement.id = elementId;
+            targetElement.setAttribute('data-bullet-color', editor.toString());
             document.styleSheets[0].insertRule('.product-sheet .diapo__container ul li#' + elementId + ':before { color: #' + editor.toString() + ' !important}', document.styleSheets[0].cssRules.length);
             this.handleCloseClick.bind(this);
             this.doFormSave();
 
             // Trigger blur's callback
-            //$('.angular-medium-editor').trigger('blur');
+            $('.angular-medium-editor').trigger('blur');
         },
 
         handleFormClick: function (event) {
@@ -7466,7 +7467,7 @@ MediumEditor.parseVersionString = function (release) {
 
 MediumEditor.version = MediumEditor.parseVersionString.call(this, ({
     // grunt-bump looks for this:
-    'version': '5.6.15'
+    'version': '5.6.16'
 }).version);
 
     return MediumEditor;
