@@ -34,6 +34,8 @@ module.exports = function (grunt) {
             'src/js/extensions/placeholder.js',
             'src/js/extensions/toolbar.js',
             'src/js/extensions/deprecated/image-dragging.js',
+            'src/js/extensions/unorderedlist.js',
+            'src/js/extensions/bulletcolorpicker.js',
             'src/js/core.js',
             'src/js/defaults/options.js',
             'src/js/version.js'
