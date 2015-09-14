@@ -5983,6 +5983,395 @@ LINK_REGEXP_TEXT =
 (function () {
     'use strict';
 
+    var UnorderedListForm = MediumEditor.extensions.form.extend({
+
+        name: 'unorderedlist',
+        action: 'insertunorderedlist',
+        tagNames: ['ul'],
+        aria: 'unordered list',
+        contentDefault: '<b>&bull;</b>', // ±
+        contentFA: '<i class="fa fa-list-ul"></i>',
+
+        init: function () {
+            MediumEditor.extensions.form.prototype.init.apply(this, arguments);
+        },
+
+        // Called when the button the toolbar is clicked
+        // Overrides ButtonExtension.handleClick
+        handleClick: function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+
+            if (!this.isDisplayed()) {
+                var icon = '';
+                this.showForm(icon);
+            }
+
+            return false;
+        },
+
+        // Called by medium-editor to append form to the toolbar
+        getForm: function () {
+            if (!this.form) {
+                this.form = this.createForm();
+            }
+            return this.form;
+        },
+
+        // Used by medium-editor when the default toolbar is to be displayed
+        isDisplayed: function () {
+            return this.getForm().style.display === 'block';
+        },
+
+        hideForm: function () {
+            this.getForm().style.display = 'none';
+        },
+
+        showForm: function (icon) {
+            var input = this.getInput();
+
+            this.base.saveSelection();
+            this.hideToolbarDefaultActions();
+            this.getForm().style.display = 'block';
+            this.setToolbarPosition();
+
+            input.value = icon || '';
+            input.focus();
+        },
+
+        // Called by core when tearing down medium-editor (destroy)
+        destroy: function () {
+            if (!this.form) {
+                return false;
+            }
+
+            if (this.form.parentNode) {
+                this.form.parentNode.removeChild(this.form);
+            }
+
+            delete this.form;
+        },
+
+        // core methods
+
+        doFormSave: function () {
+            this.base.restoreSelection();
+            this.base.checkSelection();
+        },
+
+        doFormCancel: function () {
+            this.base.restoreSelection();
+            this.clearIcon();
+            this.base.checkSelection();
+        },
+
+        // form creation and event handling
+        createForm: function () {
+            var doc = this.document,
+                form = doc.createElement('div'),
+                input = doc.createElement('input'),
+                close = doc.createElement('a'),
+                remove = doc.createElement('a'),
+                save = doc.createElement('a'),
+                ul = doc.createElement('ul'),
+                iconList = ['fa-circle', 'fa-minus', 'fa-caret-right'];
+
+
+            // Font Size Form (div)
+            form.className = 'medium-editor-toolbar-form';
+            form.id = 'medium-editor-toolbar-form-unorderedlist-' + this.getEditorId();
+
+            // Handle clicks on the form itself
+            this.on(form, 'click', this.handleFormClick.bind(this));
+
+            // Add font size slider
+            input.setAttribute('type', 'hidden');
+            input.className = 'medium-editor-toolbar-input editor-unorderedlist-input';
+            form.appendChild(input);
+
+            ul.setAttribute('class', 'medium-editor-toolbar-icon-list');
+
+            for (var i in iconList) {
+                var li = doc.createElement('li');
+                li.innerHTML = '<i class="fa ' + iconList[i] + '"></i>';
+                li.setAttribute('data-icon', iconList[i]);
+                this.on(li, 'click', this.handleIconChange.bind(this, iconList[i]));
+                ul.appendChild(li);
+            }
+
+            form.appendChild(ul);
+
+            // Add save buton
+            save.setAttribute('href', '#');
+            save.className = 'medium-editor-toobar-save';
+            save.innerHTML = this.getEditorOption('buttonLabels') === 'fontawesome' ?
+                             '<i class="fa fa-check"></i>' :
+                             '&#10003;';
+            form.appendChild(save);
+
+            // Handle save button clicks (capture)
+            this.on(save, 'click', this.handleSaveClick.bind(this), true);
+
+            // Add close button
+            close.setAttribute('href', '#');
+            close.className = 'medium-editor-toobar-close';
+            close.innerHTML = this.getEditorOption('buttonLabels') === 'fontawesome' ?
+                              '<i class="fa fa-times"></i>' :
+                              '&times;';
+            form.appendChild(close);
+
+            // Handle close button clicks
+            this.on(close, 'click', this.handleCloseClick.bind(this));
+
+            return form;
+        },
+
+        getInput: function () {
+            return this.getForm().querySelector('input.medium-editor-toolbar-input');
+        },
+
+        clearIcon: function () {
+            MediumEditor.selection.getSelectedElements(this.document).forEach(function (el) {
+                if (el.nodeName.toLowerCase() === 'i' && el.hasAttribute('class')) {
+                    el.remove();
+                }
+            });
+        },
+
+        handleIconChange: function (icon) {
+            this.getInput().value = icon;
+            this.handleCloseClick.bind(this);
+            this.doFormSave();
+
+            this.execAction('insertunorderedlist');
+
+            var element = window.getSelection().focusNode.parentElement.parentElement;
+            if(element.tagName == 'UL') {
+                element.classList.add('list-' + icon);
+            } else if(element.parentElement.tagName == 'UL') {
+                element.parentElement.classList.add('list-' + icon);
+            } 
+        },
+
+        handleFormClick: function (event) {
+            // make sure not to hide form when clicking inside the form
+            event.stopPropagation();
+        },
+
+        handleSaveClick: function (event) {
+            // Clicking Save -> create the font size
+            event.preventDefault();
+            this.doFormSave();
+        },
+
+        handleCloseClick: function (event) {
+            // Click Close -> close the form
+            event.preventDefault();
+            this.doFormCancel();
+        },
+
+        handleRemoveClick: function (event) {
+            // Click Remove
+            this.handleIconChange('none');
+            event.preventDefault();
+            this.doFormCancel();
+        }
+    });
+
+    MediumEditor.extensions.unorderedlist = UnorderedListForm;
+}());
+(function () {
+    'use strict';
+
+    var bulletColorPickerForm = MediumEditor.extensions.form.extend({
+
+        name: 'bulletcolorpicker',
+        action: 'colorpicker',
+        aria: 'select a color',
+        contentDefault: 'Color', // ±
+        contentFA: '<i class="fa fa-dot-circle-o"></i>',
+
+        init: function () {
+            MediumEditor.extensions.form.prototype.init.apply(this, arguments);
+        },
+
+        // Called when the button the toolbar is clicked
+        // Overrides ButtonExtension.handleClick
+        handleClick: function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+
+            if (!this.isDisplayed()) {
+                // Get fontsize of current selection (convert to string since IE returns this as number)
+                var color = this.getInput().value || '';
+                this.showForm(color);
+            }
+
+            return false;
+        },
+
+        // Called by medium-editor to append form to the toolbar
+        getForm: function () {
+            if (!this.form) {
+                this.form = this.createForm();
+            }
+            return this.form;
+        },
+
+        // Used by medium-editor when the default toolbar is to be displayed
+        isDisplayed: function () {
+            return this.getForm().style.display === 'block';
+        },
+
+        hideForm: function () {
+            this.getForm().style.display = 'none';
+        },
+
+        showForm: function (color) {
+            
+            var input = this.getInput();
+
+            var targetElement = window.getSelection().focusNode.parentElement;
+            if(!targetElement.tagName == 'LI' && targetElement.parentElement.tagName == 'LI') {
+                targetElement = targetElement.parentElement;
+            }
+
+            var self = this;
+            window['handleBulletColorChange' + this.getEditorId()] = function(editor) {
+                self.handleColorChange(editor, targetElement);
+            };
+
+            this.base.saveSelection();
+            this.hideToolbarDefaultActions();
+            this.getForm().style.display = 'block';
+            this.setToolbarPosition();
+
+            jscolor.dir = '/img/';
+            jscolor.init();
+
+            input.value = color || '';
+            input.focus();
+        },
+
+        // Called by core when tearing down medium-editor (destroy)
+        destroy: function () {
+            if (!this.form) {
+                return false;
+            }
+
+            if (this.form.parentNode) {
+                this.form.parentNode.removeChild(this.form);
+            }
+
+            delete this.form;
+        },
+
+        // core methods
+
+        doFormSave: function () {
+            this.base.restoreSelection();
+            this.base.checkSelection();
+        },
+
+        doFormCancel: function () {
+            this.base.restoreSelection();
+            this.clearColor();
+            this.base.checkSelection();
+        },
+
+        // form creation and event handling
+        createForm: function () {
+            var doc = this.document,
+                form = doc.createElement('div'),
+                input = doc.createElement('input'),
+                close = doc.createElement('a'),
+                save = doc.createElement('a');
+
+
+            // Font Size Form (div)
+            form.className = 'medium-editor-toolbar-form';
+            form.id = 'medium-editor-toolbar-form-bulletcolorpicker-' + this.getEditorId();
+
+            // Handle clicks on the form itself
+            this.on(form, 'click', this.handleFormClick.bind(this));
+
+            // Add font size slider
+            input.setAttribute('type', 'text');
+            input.id = 'bullet_color_picker_' + this.getEditorId();
+            input.className = 'medium-editor-toolbar-input editor-bulletcolorpicker-input color{pickerClosable:true, pickerPosition:\'left\', onImmediateChange:\'window.handleBulletColorChange' + this.getEditorId() + '(this)\'}';
+            input.value = 'fffaed';
+            form.appendChild(input);
+
+            // Add save buton
+            save.setAttribute('href', '#');
+            save.className = 'medium-editor-toobar-save';
+            save.innerHTML = this.getEditorOption('buttonLabels') === 'fontawesome' ?
+                             '<i class="fa fa-check"></i>' :
+                             '&#10003;';
+            form.appendChild(save);
+
+            // Handle save button clicks (capture)
+            this.on(save, 'click', this.handleSaveClick.bind(this), true);
+
+            // Add close button
+            close.setAttribute('href', '#');
+            close.className = 'medium-editor-toobar-close';
+            close.innerHTML = this.getEditorOption('buttonLabels') === 'fontawesome' ?
+                              '<i class="fa fa-times"></i>' :
+                              '&times;';
+            form.appendChild(close);
+
+            // Handle close button clicks
+            this.on(close, 'click', this.handleCloseClick.bind(this));
+
+            this.on(form, 'click', this.handleFormClick.bind(this));
+
+            return form;
+        },
+
+        getInput: function () {
+            return this.getForm().querySelector('input.medium-editor-toolbar-input');
+        },
+
+        clearColor: function () {
+          // Do something
+        },
+
+        handleColorChange: function (editor, targetElement) {
+            editor.valueElement.value = editor.toString();
+            var elementId = 'bullet_color_' + editor.toString();
+            targetElement.id = elementId;
+            document.styleSheets[0].insertRule('.product-sheet .diapo__container ul li#' + elementId + ':before { color: #' + editor.toString() + ' !important}', document.styleSheets[0].cssRules.length);
+            this.handleCloseClick.bind(this);
+            this.doFormSave();
+
+            // Trigger blur's callback
+            //$('.angular-medium-editor').trigger('blur');
+        },
+
+        handleFormClick: function (event) {
+            // make sure not to hide form when clicking inside the form
+            event.stopPropagation();
+        },
+
+        handleSaveClick: function (event) {
+            // Clicking Save -> create the font size
+            event.preventDefault();
+            this.doFormSave();
+        },
+
+        handleCloseClick: function (event) {
+            // Click Close -> close the form
+            event.preventDefault();
+            this.doFormCancel();
+        }
+    });
+
+    MediumEditor.extensions.bulletColorPicker = bulletColorPickerForm;
+}());
+(function () {
+    'use strict';
+
     // Event handlers that shouldn't be exposed externally
 
     function handleDisabledEnterKeydown(event, element) {
@@ -6710,6 +7099,12 @@ LINK_REGEXP_TEXT =
                 case 'colorPicker':
                     extension = new MediumEditor.extensions.colorPicker(opts);
                     break;
+                case 'unorderedlist':
+                    extension = new MediumEditor.extensions.unorderedlist(opts);
+                    break;
+                case 'bulletcolorpicker':
+                    extension = new MediumEditor.extensions.bulletColorPicker(opts);
+                    break;
                 default:
                     // All of the built-in buttons for MediumEditor are extensions
                     // so check to see if the extension we're creating is a built-in button
@@ -7071,7 +7466,7 @@ MediumEditor.parseVersionString = function (release) {
 
 MediumEditor.version = MediumEditor.parseVersionString.call(this, ({
     // grunt-bump looks for this:
-    'version': '5.6.14'
+    'version': '5.6.15'
 }).version);
 
     return MediumEditor;
