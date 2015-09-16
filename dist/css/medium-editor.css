@@ -177,12 +177,9 @@
     margin: 0;
     padding: 6px;
     width: 316px;
-    display: inline-block; }
+    /*display: inline-block;*/ }
     .medium-editor-toolbar-form .medium-editor-toolbar-input:focus,
     .medium-editor-toolbar-form label:focus {
-      -webkit-appearance: none;
-         -moz-appearance: none;
-              appearance: none;
       border: none;
       box-shadow: none;
       outline: 0; }
