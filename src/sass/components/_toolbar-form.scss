@@ -20,10 +20,9 @@
         margin: 0;
         padding: 6px;
         width: 316px;
-        display: inline-block;
+        /*display: inline-block;*/
 
         &:focus {
-            appearance: none;
             border: none;
             box-shadow: none;
             outline: 0;
