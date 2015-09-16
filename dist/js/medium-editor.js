@@ -7488,7 +7488,7 @@ MediumEditor.parseVersionString = function (release) {
 
 MediumEditor.version = MediumEditor.parseVersionString.call(this, ({
     // grunt-bump looks for this:
-    'version': '5.6.17'
+    'version': '5.6.18'
 }).version);
 
     return MediumEditor;
