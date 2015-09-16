@@ -6143,14 +6143,35 @@ LINK_REGEXP_TEXT =
             this.handleCloseClick.bind(this);
             this.doFormSave();
 
+            // Creates / removes the list items
             this.execAction('insertunorderedlist');
 
-            var element = window.getSelection().focusNode.parentElement.parentElement;
-            if(element.tagName == 'UL') {
-                element.classList.add('list-' + icon);
-            } else if(element.parentElement.tagName == 'UL') {
-                element.parentElement.classList.add('list-' + icon);
-            } 
+            var selection = window.getSelection();
+            var range = selection.getRangeAt(0);
+
+            if(range.startContainer === range.endContainer) {
+                // If 1 element in selection, apply class on the closest parent LI
+                
+                var el = range.startContainer;
+
+                for ( ; el && el !== document; el = el.parentNode ) {    
+                    if ( typeof el.tagName !== 'undefined' && el.tagName.toLowerCase() === 'li') {
+                        el.classList.add('list-' + icon);
+                        break;
+                    }
+                }
+            } else {
+                // If several DOM elements selection, apply class on every LI in it
+
+                var allWithinRangeParent = range.commonAncestorContainer.getElementsByTagName("li");
+
+                var allSelected = [];
+                for (var i=0, el; el = allWithinRangeParent[i]; i++) {
+                    if (selection.containsNode(el, true) ) {
+                        el.classList.add('list-' + icon);
+                    }
+                }
+            }            
         },
 
         handleFormClick: function (event) {
@@ -7467,7 +7488,7 @@ MediumEditor.parseVersionString = function (release) {
 
 MediumEditor.version = MediumEditor.parseVersionString.call(this, ({
     // grunt-bump looks for this:
-    'version': '5.6.16'
+    'version': '5.6.17'
 }).version);
 
     return MediumEditor;
