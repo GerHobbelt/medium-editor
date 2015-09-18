@@ -6074,7 +6074,7 @@ LINK_REGEXP_TEXT =
                 remove = doc.createElement('a'),
                 save = doc.createElement('a'),
                 ul = doc.createElement('ul'),
-                iconList = ['fa-circle', 'fa-minus', 'fa-caret-right'];
+                iconList = ['fa-circle', 'fa-minus', 'fa-caret-right', 'fa-circle-o', 'fa-square'];
 
 
             // Font Size Form (div)
@@ -7488,7 +7488,7 @@ MediumEditor.parseVersionString = function (release) {
 
 MediumEditor.version = MediumEditor.parseVersionString.call(this, ({
     // grunt-bump looks for this:
-    'version': '5.6.18'
+    'version': '5.6.19'
 }).version);
 
     return MediumEditor;
