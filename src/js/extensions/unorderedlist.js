@@ -92,7 +92,7 @@
                 remove = doc.createElement('a'),
                 save = doc.createElement('a'),
                 ul = doc.createElement('ul'),
-                iconList = ['fa-circle', 'fa-minus', 'fa-caret-right'];
+                iconList = ['fa-circle', 'fa-minus', 'fa-caret-right', 'fa-circle-o', 'fa-square'];
 
 
             // Font Size Form (div)
