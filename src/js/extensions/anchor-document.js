@@ -40,7 +40,7 @@
         // Options for the Button base class
         name: 'anchorDocument',
         action: 'createLink',
-        aria: 'link',
+        aria: 'Lien vers un document',
         tagNames: ['a'],
         contentDefault: '<b>Doc</b>',
         contentFA: '<i class="fa fa-file-text-o"></i>',

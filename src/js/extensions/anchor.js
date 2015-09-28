@@ -40,7 +40,7 @@
         // Options for the Button base class
         name: 'anchor',
         action: 'createLink',
-        aria: 'link',
+        aria: 'Lien',
         tagNames: ['a'],
         contentDefault: '<b>#</b>',
         contentFA: '<i class="fa fa-link"></i>',

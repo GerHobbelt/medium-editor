@@ -5,7 +5,7 @@
 
         name: 'icon',
         action: 'icon',
-        aria: 'select an icon',
+        aria: 'Icône',
         contentDefault: 'Icône', // ±
         contentFA: '<i class="fa fa-fonticons"></i>',
 
