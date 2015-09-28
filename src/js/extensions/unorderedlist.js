@@ -6,7 +6,7 @@
         name: 'unorderedlist',
         action: 'insertunorderedlist',
         tagNames: ['ul'],
-        aria: 'unordered list',
+        aria: 'Liste à puce',
         contentDefault: '<b>&bull;</b>', // ±
         contentFA: '<i class="fa fa-list-ul"></i>',
 

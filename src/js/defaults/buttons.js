@@ -8,7 +8,7 @@
         'bold': {
             name: 'bold',
             action: 'bold',
-            aria: 'bold',
+            aria: 'Gras',
             tagNames: ['b', 'strong'],
             style: {
                 prop: 'font-weight',
@@ -21,7 +21,7 @@
         'italic': {
             name: 'italic',
             action: 'italic',
-            aria: 'italic',
+            aria: 'Italique',
             tagNames: ['i', 'em'],
             style: {
                 prop: 'font-style',
@@ -34,7 +34,7 @@
         'underline': {
             name: 'underline',
             action: 'underline',
-            aria: 'underline',
+            aria: 'Sousligné',
             tagNames: ['u'],
             style: {
                 prop: 'text-decoration',
@@ -47,7 +47,7 @@
         'strikethrough': {
             name: 'strikethrough',
             action: 'strikethrough',
-            aria: 'strike through',
+            aria: 'Barré',
             tagNames: ['strike'],
             style: {
                 prop: 'text-decoration',
@@ -60,7 +60,7 @@
         'superscript': {
             name: 'superscript',
             action: 'superscript',
-            aria: 'superscript',
+            aria: 'Exposant',
             tagNames: ['sup'],
             /* firefox doesn't behave the way we want it to, so we CAN'T use queryCommandState for superscript
                https://github.com/guardian/scribe/blob/master/BROWSERINCONSISTENCIES.md#documentquerycommandstate */
@@ -71,7 +71,7 @@
         'subscript': {
             name: 'subscript',
             action: 'subscript',
-            aria: 'subscript',
+            aria: 'Indice',
             tagNames: ['sub'],
             /* firefox doesn't behave the way we want it to, so we CAN'T use queryCommandState for subscript
                https://github.com/guardian/scribe/blob/master/BROWSERINCONSISTENCIES.md#documentquerycommandstate */
@@ -82,7 +82,7 @@
         'image': {
             name: 'image',
             action: 'image',
-            aria: 'image',
+            aria: 'Image',
             tagNames: ['img'],
             contentDefault: '<b>image</b>',
             contentFA: '<i class="fa fa-picture-o"></i>'
@@ -90,7 +90,7 @@
         'orderedlist': {
             name: 'orderedlist',
             action: 'insertorderedlist',
-            aria: 'ordered list',
+            aria: 'Liste numérotée',
             tagNames: ['ol'],
             useQueryState: true,
             contentDefault: '<b>1.</b>',
@@ -99,7 +99,7 @@
         'unorderedlist': {
             name: 'unorderedlist',
             action: 'insertunorderedlist',
-            aria: 'unordered list',
+            aria: 'Liste à puce',
             tagNames: ['ul'],
             useQueryState: true,
             contentDefault: '<b>&bull;</b>',
@@ -108,7 +108,7 @@
         'indent': {
             name: 'indent',
             action: 'indent',
-            aria: 'indent',
+            aria: 'Augmenter le retrait',
             tagNames: [],
             contentDefault: '<b>&rarr;</b>',
             contentFA: '<i class="fa fa-indent"></i>'
@@ -116,7 +116,7 @@
         'outdent': {
             name: 'outdent',
             action: 'outdent',
-            aria: 'outdent',
+            aria: 'Diminuer le retrait',
             tagNames: [],
             contentDefault: '<b>&larr;</b>',
             contentFA: '<i class="fa fa-outdent"></i>'
@@ -124,7 +124,7 @@
         'justifyCenter': {
             name: 'justifyCenter',
             action: 'justifyCenter',
-            aria: 'center justify',
+            aria: 'Centrer',
             tagNames: [],
             style: {
                 prop: 'text-align',
@@ -136,7 +136,7 @@
         'justifyFull': {
             name: 'justifyFull',
             action: 'justifyFull',
-            aria: 'full justify',
+            aria: 'Justifier',
             tagNames: [],
             style: {
                 prop: 'text-align',
@@ -148,7 +148,7 @@
         'justifyLeft': {
             name: 'justifyLeft',
             action: 'justifyLeft',
-            aria: 'left justify',
+            aria: 'Caler à gauche',
             tagNames: [],
             style: {
                 prop: 'text-align',
@@ -160,7 +160,7 @@
         'justifyRight': {
             name: 'justifyRight',
             action: 'justifyRight',
-            aria: 'right justify',
+            aria: 'Caler à droite',
             tagNames: [],
             style: {
                 prop: 'text-align',
@@ -173,7 +173,7 @@
         // <span>, <label>, <br>
         'removeFormat': {
             name: 'removeFormat',
-            aria: 'remove formatting',
+            aria: 'Supprimer la mise en forme',
             action: 'removeFormat',
             contentDefault: '<b>X</b>',
             contentFA: '<i class="fa fa-eraser"></i>'
@@ -184,7 +184,7 @@
         'quote': {
             name: 'quote',
             action: 'append-blockquote',
-            aria: 'blockquote',
+            aria: 'Citation',
             tagNames: ['blockquote'],
             contentDefault: '<b>&ldquo;</b>',
             contentFA: '<i class="fa fa-quote-right"></i>'

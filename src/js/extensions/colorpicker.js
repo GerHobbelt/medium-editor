@@ -5,7 +5,7 @@
 
         name: 'colorpicker',
         action: 'colorpicker',
-        aria: 'select a color',
+        aria: 'Sélectionner une couleur pour le texte',
         contentDefault: 'Color', // ±
         contentFA: '<i class="fa fa-paint-brush"></i>',
 

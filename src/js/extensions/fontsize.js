@@ -5,7 +5,7 @@
 
         name: 'fontsize',
         action: 'fontSize',
-        aria: 'increase/decrease font size',
+        aria: 'Taille de la police',
         contentDefault: '&#xB1;', // ±
         contentFA: '<i class="fa fa-text-height"></i>',
 

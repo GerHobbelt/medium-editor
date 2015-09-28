@@ -2725,7 +2725,7 @@ MediumEditor.extensions = {};
         'bold': {
             name: 'bold',
             action: 'bold',
-            aria: 'bold',
+            aria: 'Gras',
             tagNames: ['b', 'strong'],
             style: {
                 prop: 'font-weight',
@@ -2738,7 +2738,7 @@ MediumEditor.extensions = {};
         'italic': {
             name: 'italic',
             action: 'italic',
-            aria: 'italic',
+            aria: 'Italique',
             tagNames: ['i', 'em'],
             style: {
                 prop: 'font-style',
@@ -2751,7 +2751,7 @@ MediumEditor.extensions = {};
         'underline': {
             name: 'underline',
             action: 'underline',
-            aria: 'underline',
+            aria: 'Sousligné',
             tagNames: ['u'],
             style: {
                 prop: 'text-decoration',
@@ -2764,7 +2764,7 @@ MediumEditor.extensions = {};
         'strikethrough': {
             name: 'strikethrough',
             action: 'strikethrough',
-            aria: 'strike through',
+            aria: 'Barré',
             tagNames: ['strike'],
             style: {
                 prop: 'text-decoration',
@@ -2777,7 +2777,7 @@ MediumEditor.extensions = {};
         'superscript': {
             name: 'superscript',
             action: 'superscript',
-            aria: 'superscript',
+            aria: 'Exposant',
             tagNames: ['sup'],
             /* firefox doesn't behave the way we want it to, so we CAN'T use queryCommandState for superscript
                https://github.com/guardian/scribe/blob/master/BROWSERINCONSISTENCIES.md#documentquerycommandstate */
@@ -2788,7 +2788,7 @@ MediumEditor.extensions = {};
         'subscript': {
             name: 'subscript',
             action: 'subscript',
-            aria: 'subscript',
+            aria: 'Indice',
             tagNames: ['sub'],
             /* firefox doesn't behave the way we want it to, so we CAN'T use queryCommandState for subscript
                https://github.com/guardian/scribe/blob/master/BROWSERINCONSISTENCIES.md#documentquerycommandstate */
@@ -2799,7 +2799,7 @@ MediumEditor.extensions = {};
         'image': {
             name: 'image',
             action: 'image',
-            aria: 'image',
+            aria: 'Image',
             tagNames: ['img'],
             contentDefault: '<b>image</b>',
             contentFA: '<i class="fa fa-picture-o"></i>'
@@ -2807,7 +2807,7 @@ MediumEditor.extensions = {};
         'orderedlist': {
             name: 'orderedlist',
             action: 'insertorderedlist',
-            aria: 'ordered list',
+            aria: 'Liste numérotée',
             tagNames: ['ol'],
             useQueryState: true,
             contentDefault: '<b>1.</b>',
@@ -2816,7 +2816,7 @@ MediumEditor.extensions = {};
         'unorderedlist': {
             name: 'unorderedlist',
             action: 'insertunorderedlist',
-            aria: 'unordered list',
+            aria: 'Liste à puce',
             tagNames: ['ul'],
             useQueryState: true,
             contentDefault: '<b>&bull;</b>',
@@ -2825,7 +2825,7 @@ MediumEditor.extensions = {};
         'indent': {
             name: 'indent',
             action: 'indent',
-            aria: 'indent',
+            aria: 'Augmenter le retrait',
             tagNames: [],
             contentDefault: '<b>&rarr;</b>',
             contentFA: '<i class="fa fa-indent"></i>'
@@ -2833,7 +2833,7 @@ MediumEditor.extensions = {};
         'outdent': {
             name: 'outdent',
             action: 'outdent',
-            aria: 'outdent',
+            aria: 'Diminuer le retrait',
             tagNames: [],
             contentDefault: '<b>&larr;</b>',
             contentFA: '<i class="fa fa-outdent"></i>'
@@ -2841,7 +2841,7 @@ MediumEditor.extensions = {};
         'justifyCenter': {
             name: 'justifyCenter',
             action: 'justifyCenter',
-            aria: 'center justify',
+            aria: 'Centrer',
             tagNames: [],
             style: {
                 prop: 'text-align',
@@ -2853,7 +2853,7 @@ MediumEditor.extensions = {};
         'justifyFull': {
             name: 'justifyFull',
             action: 'justifyFull',
-            aria: 'full justify',
+            aria: 'Justifier',
             tagNames: [],
             style: {
                 prop: 'text-align',
@@ -2865,7 +2865,7 @@ MediumEditor.extensions = {};
         'justifyLeft': {
             name: 'justifyLeft',
             action: 'justifyLeft',
-            aria: 'left justify',
+            aria: 'Caler à gauche',
             tagNames: [],
             style: {
                 prop: 'text-align',
@@ -2877,7 +2877,7 @@ MediumEditor.extensions = {};
         'justifyRight': {
             name: 'justifyRight',
             action: 'justifyRight',
-            aria: 'right justify',
+            aria: 'Caler à droite',
             tagNames: [],
             style: {
                 prop: 'text-align',
@@ -2890,7 +2890,7 @@ MediumEditor.extensions = {};
         // <span>, <label>, <br>
         'removeFormat': {
             name: 'removeFormat',
-            aria: 'remove formatting',
+            aria: 'Supprimer la mise en forme',
             action: 'removeFormat',
             contentDefault: '<b>X</b>',
             contentFA: '<i class="fa fa-eraser"></i>'
@@ -2901,7 +2901,7 @@ MediumEditor.extensions = {};
         'quote': {
             name: 'quote',
             action: 'append-blockquote',
-            aria: 'blockquote',
+            aria: 'Citation',
             tagNames: ['blockquote'],
             contentDefault: '<b>&ldquo;</b>',
             contentFA: '<i class="fa fa-quote-right"></i>'
@@ -3102,7 +3102,7 @@ MediumEditor.extensions = {};
         // Options for the Button base class
         name: 'anchor',
         action: 'createLink',
-        aria: 'link',
+        aria: 'Lien',
         tagNames: ['a'],
         contentDefault: '<b>#</b>',
         contentFA: '<i class="fa fa-link"></i>',
@@ -3425,7 +3425,7 @@ MediumEditor.extensions = {};
         // Options for the Button base class
         name: 'anchorDocument',
         action: 'createLink',
-        aria: 'link',
+        aria: 'Lien vers un document',
         tagNames: ['a'],
         contentDefault: '<b>Doc</b>',
         contentFA: '<i class="fa fa-file-text-o"></i>',
@@ -4362,7 +4362,7 @@ LINK_REGEXP_TEXT =
 
         name: 'fontsize',
         action: 'fontSize',
-        aria: 'increase/decrease font size',
+        aria: 'Taille de la police',
         contentDefault: '&#xB1;', // ±
         contentFA: '<i class="fa fa-text-height"></i>',
 
@@ -4534,7 +4534,7 @@ LINK_REGEXP_TEXT =
 
         name: 'icon',
         action: 'icon',
-        aria: 'select an icon',
+        aria: 'Icône',
         contentDefault: 'Icône', // ±
         contentFA: '<i class="fa fa-fonticons"></i>',
 
@@ -4740,7 +4740,7 @@ LINK_REGEXP_TEXT =
 
         name: 'colorpicker',
         action: 'colorpicker',
-        aria: 'select a color',
+        aria: 'Sélectionner une couleur pour le texte',
         contentDefault: 'Color', // ±
         contentFA: '<i class="fa fa-paint-brush"></i>',
 
@@ -5988,7 +5988,7 @@ LINK_REGEXP_TEXT =
         name: 'unorderedlist',
         action: 'insertunorderedlist',
         tagNames: ['ul'],
-        aria: 'unordered list',
+        aria: 'Liste à puce',
         contentDefault: '<b>&bull;</b>', // ±
         contentFA: '<i class="fa fa-list-ul"></i>',
 
@@ -6208,7 +6208,7 @@ LINK_REGEXP_TEXT =
 
         name: 'bulletcolorpicker',
         action: 'colorpicker',
-        aria: 'select a color',
+        aria: 'Sélectionner une couleur pour les puces',
         contentDefault: 'Color', // ±
         contentFA: '<i class="fa fa-dot-circle-o"></i>',
 
@@ -7488,7 +7488,7 @@ MediumEditor.parseVersionString = function (release) {
 
 MediumEditor.version = MediumEditor.parseVersionString.call(this, ({
     // grunt-bump looks for this:
-    'version': '5.6.19'
+    'version': '5.6.20'
 }).version);
 
     return MediumEditor;

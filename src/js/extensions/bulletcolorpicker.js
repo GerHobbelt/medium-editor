@@ -5,7 +5,7 @@
 
         name: 'bulletcolorpicker',
         action: 'colorpicker',
-        aria: 'select a color',
+        aria: 'Sélectionner une couleur pour les puces',
         contentDefault: 'Color', // ±
         contentFA: '<i class="fa fa-dot-circle-o"></i>',
 
