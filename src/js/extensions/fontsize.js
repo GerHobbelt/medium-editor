@@ -21,7 +21,7 @@
 
             if (!this.isDisplayed()) {
                 // Get fontsize of current selection (convert to string since IE returns this as number)
-                var fontSize = window.getComputedStyle(this.getEditorElements()[0]).fontSize.replace('px', '');
+                var fontSize = window.getComputedStyle(window.getSelection().focusNode.parentElement).fontSize.replace('px', '');
                 this.showForm(fontSize);
             }
 
@@ -48,6 +48,7 @@
 
         showForm: function (fontSize) {
             var input = this.getInput();
+            var preview = this.getPreview();
 
             this.base.saveSelection();
             this.hideToolbarDefaultActions();
@@ -55,6 +56,7 @@
             this.setToolbarPosition();
 
             input.value = fontSize || '';
+            preview.value = fontSize || '';
             input.focus();
         },
 
@@ -88,6 +90,7 @@
             var doc = this.document,
                 form = doc.createElement('div'),
                 input = doc.createElement('input'),
+                preview = doc.createElement('input'),
                 close = doc.createElement('a'),
                 save = doc.createElement('a');
 
@@ -107,6 +110,12 @@
 
             // Handle typing in the textbox
             this.on(input, 'change', this.handleSliderChange.bind(this));
+            this.on(input, 'input', this.handlePreviewChange.bind(this));
+
+            preview.setAttribute('type', 'text');
+            preview.setAttribute('disabled', 'disabled');
+            preview.className = 'medium-editor-toolbar-preview';
+            form.appendChild(preview);
 
             // Add save buton
             save.setAttribute('href', '#');
@@ -137,6 +146,10 @@
             return this.getForm().querySelector('input.medium-editor-toolbar-input');
         },
 
+        getPreview: function () {
+            return this.getForm().querySelector('input.medium-editor-toolbar-preview');
+        },
+
         handleSliderChange: function () {
             var size = this.getInput().value;
             this.execAction('fontSize', { size: 7 });
@@ -148,6 +161,11 @@
                     fontElements[i].style.fontSize = size + "px";
                 }
             }
+        },
+
+        handlePreviewChange: function () {
+            var size = this.getInput().value;
+            this.getPreview().value = size;
         },
 
         handleFormClick: function (event) {
