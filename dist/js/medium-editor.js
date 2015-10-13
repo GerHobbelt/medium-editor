@@ -6253,8 +6253,10 @@ LINK_REGEXP_TEXT =
             var input = this.getInput();
 
             var targetElement = window.getSelection().focusNode.parentElement;
-            if(!targetElement.tagName == 'LI' && targetElement.parentElement.tagName == 'LI') {
+            if(targetElement.tagName !== 'LI' && targetElement.parentElement.tagName == 'LI') {
                 targetElement = targetElement.parentElement;
+            } else if(targetElement.tagName !== 'LI' && targetElement.parentElement.parentElement.tagName == 'LI') {
+                targetElement = targetElement.parentElement.parentElement;
             }
 
             var self = this;
@@ -7488,7 +7490,7 @@ MediumEditor.parseVersionString = function (release) {
 
 MediumEditor.version = MediumEditor.parseVersionString.call(this, ({
     // grunt-bump looks for this:
-    'version': '5.6.20'
+    'version': '5.6.21'
 }).version);
 
     return MediumEditor;
