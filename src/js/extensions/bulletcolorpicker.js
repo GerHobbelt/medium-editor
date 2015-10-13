@@ -50,8 +50,10 @@
             var input = this.getInput();
 
             var targetElement = window.getSelection().focusNode.parentElement;
-            if(!targetElement.tagName == 'LI' && targetElement.parentElement.tagName == 'LI') {
+            if(targetElement.tagName !== 'LI' && targetElement.parentElement.tagName == 'LI') {
                 targetElement = targetElement.parentElement;
+            } else if(targetElement.tagName !== 'LI' && targetElement.parentElement.parentElement.tagName == 'LI') {
+                targetElement = targetElement.parentElement.parentElement;
             }
 
             var self = this;
