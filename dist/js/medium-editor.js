@@ -4434,6 +4434,17 @@ LINK_REGEXP_TEXT =
 
         doFormSave: function () {
             this.base.restoreSelection();
+
+            var size = this.getPreview().value;
+            this.execAction('fontSize', { size: 7 });
+            var fontElements = document.getElementsByTagName("font");
+            for (var i = 0, len = fontElements.length; i < len; ++i) {
+                if (fontElements[i].size == "7") {
+                    fontElements[i].removeAttribute("size");
+                    fontElements[i].style.fontSize = size + "px";
+                }
+            }
+
             this.base.checkSelection();
         },
 
@@ -4467,10 +4478,10 @@ LINK_REGEXP_TEXT =
 
             // Handle typing in the textbox
             this.on(input, 'change', this.handleSliderChange.bind(this));
-            this.on(input, 'input', this.handlePreviewChange.bind(this));
+            this.on(input, 'input', this.handleSliderInput.bind(this));
+            this.on(preview, 'input', this.handlePreviewChange.bind(this));
 
             preview.setAttribute('type', 'text');
-            preview.setAttribute('disabled', 'disabled');
             preview.className = 'medium-editor-toolbar-preview';
             form.appendChild(preview);
 
@@ -4508,21 +4519,15 @@ LINK_REGEXP_TEXT =
         },
 
         handleSliderChange: function () {
-            var size = this.getInput().value;
-            this.execAction('fontSize', { size: 7 });
+        },
 
-            var fontElements = document.getElementsByTagName("font");
-            for (var i = 0, len = fontElements.length; i < len; ++i) {
-                if (fontElements[i].size == "7") {
-                    fontElements[i].removeAttribute("size");
-                    fontElements[i].style.fontSize = size + "px";
-                }
-            }
+        handleSliderInput: function () {
+            var size = this.getInput().value;
+            this.getPreview().value = size;
         },
 
         handlePreviewChange: function () {
-            var size = this.getInput().value;
-            this.getPreview().value = size;
+            this.base.restoreSelection();
         },
 
         handleFormClick: function (event) {
@@ -7508,7 +7513,7 @@ MediumEditor.parseVersionString = function (release) {
 
 MediumEditor.version = MediumEditor.parseVersionString.call(this, ({
     // grunt-bump looks for this:
-    'version': '5.6.22'
+    'version': '5.6.23'
 }).version);
 
     return MediumEditor;
