@@ -7,7 +7,7 @@
         action: 'icon',
         aria: 'Icône',
         contentDefault: 'Icône', // ±
-        contentFA: '<i class="fa fa-fonticons"></i>',
+        contentFA: '<i class="fa fa-picture-o"></i>',
 
         init: function () {
             MediumEditor.extensions.form.prototype.init.apply(this, arguments);
@@ -92,8 +92,8 @@
                 remove = doc.createElement('a'),
                 save = doc.createElement('a'),
                 ul = doc.createElement('ul'),
-                iconList = ['fa-cog', 'fa-puzzle-piece', 
-                    'fa-calculator', 'fa-plus', 'fa-paper-plane' , 'fa-search'];
+                iconList = ['gear', 'puzzle', 
+                    'calc', 'plus', 'plane' , 'search'];
 
 
             // Font Size Form (div)
@@ -112,7 +112,7 @@
 
             for (var i in iconList) {
                 var li = doc.createElement('li');
-                li.innerHTML = '<i class="fa ' + iconList[i] + '"></i>';
+                li.innerHTML = '<span class="icon-' + iconList[i] + '"></span>';
                 li.setAttribute('data-icon', iconList[i]);
                 this.on(li, 'click', this.handleIconChange.bind(this, iconList[i]));
                 ul.appendChild(li);

@@ -4559,7 +4559,7 @@ LINK_REGEXP_TEXT =
         action: 'icon',
         aria: 'Icône',
         contentDefault: 'Icône', // ±
-        contentFA: '<i class="fa fa-fonticons"></i>',
+        contentFA: '<i class="fa fa-picture-o"></i>',
 
         init: function () {
             MediumEditor.extensions.form.prototype.init.apply(this, arguments);
@@ -4644,8 +4644,8 @@ LINK_REGEXP_TEXT =
                 remove = doc.createElement('a'),
                 save = doc.createElement('a'),
                 ul = doc.createElement('ul'),
-                iconList = ['fa-cog', 'fa-puzzle-piece', 
-                    'fa-calculator', 'fa-plus', 'fa-paper-plane' , 'fa-search'];
+                iconList = ['gear', 'puzzle', 
+                    'calc', 'plus', 'plane' , 'search'];
 
 
             // Font Size Form (div)
@@ -4664,7 +4664,7 @@ LINK_REGEXP_TEXT =
 
             for (var i in iconList) {
                 var li = doc.createElement('li');
-                li.innerHTML = '<i class="fa ' + iconList[i] + '"></i>';
+                li.innerHTML = '<span class="icon-' + iconList[i] + '"></span>';
                 li.setAttribute('data-icon', iconList[i]);
                 this.on(li, 'click', this.handleIconChange.bind(this, iconList[i]));
                 ul.appendChild(li);
@@ -7513,7 +7513,7 @@ MediumEditor.parseVersionString = function (release) {
 
 MediumEditor.version = MediumEditor.parseVersionString.call(this, ({
     // grunt-bump looks for this:
-    'version': '5.6.23'
+    'version': '5.6.24'
 }).version);
 
     return MediumEditor;
