@@ -6146,6 +6146,17 @@ LINK_REGEXP_TEXT =
             // Handle close button clicks
             this.on(close, 'click', this.handleCloseClick.bind(this));
 
+            // Add remove button
+            remove.setAttribute('href', '#');
+            remove.className = 'medium-editor-toobar-remove';
+            remove.innerHTML = this.getEditorOption('buttonLabels') === 'fontawesome' ?
+                              '<i class="fa fa-eraser"></i>' :
+                              'Retirer';
+            form.appendChild(remove);
+
+            // Handle remove button clicks
+            this.on(remove, 'click', this.handleRemoveClick.bind(this));
+
             return form;
         },
 
@@ -6166,35 +6177,20 @@ LINK_REGEXP_TEXT =
             this.handleCloseClick.bind(this);
             this.doFormSave();
 
-            // Creates / removes the list items
-            this.execAction('insertunorderedlist');
+            if(this.getListElements().length == 0 || icon === 'none') {
+               // Creates/removes the list items
+                this.execAction('insertunorderedlist');
 
-            var selection = window.getSelection();
-            var range = selection.getRangeAt(0);
-
-            if(range.startContainer === range.endContainer) {
-                // If 1 element in selection, apply class on the closest parent LI
-                
-                var el = range.startContainer;
-
-                for ( ; el && el !== document; el = el.parentNode ) {    
-                    if ( typeof el.tagName !== 'undefined' && el.tagName.toLowerCase() === 'li') {
-                        el.classList.add('list-' + icon);
-                        break;
-                    }
+                if(icon === 'none' && this.getListElements().length > 0) {
+                    this.execAction('insertunorderedlist');
                 }
-            } else {
-                // If several DOM elements selection, apply class on every LI in it
-
-                var allWithinRangeParent = range.commonAncestorContainer.getElementsByTagName("li");
-
-                var allSelected = [];
-                for (var i=0, el; el = allWithinRangeParent[i]; i++) {
-                    if (selection.containsNode(el, true) ) {
-                        el.classList.add('list-' + icon);
-                    }
-                }
-            }            
+            } 
+            
+            this.getListElements().forEach(function(el) {
+                var regx = new RegExp('\\blist-.*?\\b', 'g');
+                el.className = el.className.replace(regx, '');
+                el.classList.add('list-' + icon);
+            });
         },
 
         handleFormClick: function (event) {
@@ -6219,6 +6215,44 @@ LINK_REGEXP_TEXT =
             this.handleIconChange('none');
             event.preventDefault();
             this.doFormCancel();
+        },
+
+        getListElements: function() {
+            var selection = window.getSelection();
+            var range = selection.getRangeAt(0);
+            var elements = [];
+            var startEl = range.startContainer;
+            var endEl = range.endContainer;
+
+            if(startEl.innerHTML === endEl.wholeText) {
+                startEl = endEl;
+            }
+
+            if(startEl === endEl) {
+                // If 1 element in selection
+                
+                var el = startEl;
+
+                for ( ; el && el !== document; el = el.parentNode ) {   
+                    if ( typeof el.tagName !== 'undefined' && el.tagName.toLowerCase() === 'li') {
+                        elements.push(el);
+                        break;
+                    }
+                }
+            } else {
+                // If several DOM elements selection
+
+                var allWithinRangeParent = range.commonAncestorContainer.getElementsByTagName("li");
+
+                var allSelected = [];
+                for (var i=0, el; el = allWithinRangeParent[i]; i++) {
+                    if (selection.containsNode(el, true) ) {
+                        elements.push(el);
+                    }
+                }
+            } 
+
+            return elements; 
         }
     });
 
@@ -7513,7 +7547,7 @@ MediumEditor.parseVersionString = function (release) {
 
 MediumEditor.version = MediumEditor.parseVersionString.call(this, ({
     // grunt-bump looks for this:
-    'version': '5.6.24'
+    'version': '5.6.25'
 }).version);
 
     return MediumEditor;
