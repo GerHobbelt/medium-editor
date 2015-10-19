@@ -6309,16 +6309,18 @@ LINK_REGEXP_TEXT =
             
             var input = this.getInput();
 
-            var targetElement = window.getSelection().focusNode.parentElement;
+            /*var targetElement = window.getSelection().focusNode.parentElement;
             if(targetElement.tagName !== 'LI' && targetElement.parentElement.tagName == 'LI') {
                 targetElement = targetElement.parentElement;
             } else if(targetElement.tagName !== 'LI' && targetElement.parentElement.parentElement.tagName == 'LI') {
                 targetElement = targetElement.parentElement.parentElement;
-            }
+            }*/
+
+            var targetElements = this.getListElements();
 
             var self = this;
             window['handleBulletColorChange' + this.getEditorId()] = function(editor) {
-                self.handleColorChange(editor, targetElement);
+                self.handleColorChange(editor, targetElements);
             };
 
             this.base.saveSelection();
@@ -6331,6 +6333,44 @@ LINK_REGEXP_TEXT =
 
             input.value = color || '';
             input.focus();
+        },
+
+        getListElements: function() {
+            var selection = window.getSelection();
+            var range = selection.getRangeAt(0);
+            var elements = [];
+            var startEl = range.startContainer;
+            var endEl = range.endContainer;
+
+            if(startEl.innerHTML === endEl.wholeText) {
+                startEl = endEl;
+            }
+
+            if(startEl === endEl) {
+                // If 1 element in selection
+                
+                var el = startEl;
+
+                for ( ; el && el !== document; el = el.parentNode ) {   
+                    if ( typeof el.tagName !== 'undefined' && el.tagName.toLowerCase() === 'li') {
+                        elements.push(el);
+                        break;
+                    }
+                }
+            } else {
+                // If several DOM elements selection
+
+                var allWithinRangeParent = range.commonAncestorContainer.getElementsByTagName("li");
+
+                var allSelected = [];
+                for (var i=0, el; el = allWithinRangeParent[i]; i++) {
+                    if (selection.containsNode(el, true) ) {
+                        elements.push(el);
+                    }
+                }
+            } 
+
+            return elements; 
         },
 
         // Called by core when tearing down medium-editor (destroy)
@@ -6417,11 +6457,15 @@ LINK_REGEXP_TEXT =
           // Do something
         },
 
-        handleColorChange: function (editor, targetElement) {
+        handleColorChange: function (editor, targetElements) {
             editor.valueElement.value = editor.toString();
             var elementId = 'bullet_color_' + editor.toString();
-            targetElement.id = elementId;
-            targetElement.setAttribute('data-bullet-color', editor.toString());
+
+            targetElements.forEach(function(el) {
+                el.id = elementId;
+                el.setAttribute('data-bullet-color', editor.toString());
+            });
+            
             document.styleSheets[0].insertRule('.product-sheet .diapo__container ul li#' + elementId + ':before { color: #' + editor.toString() + ' !important}', document.styleSheets[0].cssRules.length);
             this.handleCloseClick.bind(this);
             this.doFormSave();
@@ -7547,7 +7591,7 @@ MediumEditor.parseVersionString = function (release) {
 
 MediumEditor.version = MediumEditor.parseVersionString.call(this, ({
     // grunt-bump looks for this:
-    'version': '5.6.25'
+    'version': '5.6.26'
 }).version);
 
     return MediumEditor;
