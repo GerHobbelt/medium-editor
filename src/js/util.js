@@ -477,6 +477,19 @@
             }
         },
 
+        addAppNameToAnchors: function (el, appName) {
+                var i,j;
+
+            if (el.nodeName.toLowerCase() === 'a') {
+                el.setAttribute('data-external', 'bcm://' + appName);
+            } else {
+                el = el.getElementsByTagName('a');
+                for (i = 0; i < el.length; i += 1) {
+                    el[i].setAttribute('data-external', 'bcm://' + appName);
+                }
+            }
+        },
+
         addLinkToExternalData: function (el, url) {
                 var i,j;
 
