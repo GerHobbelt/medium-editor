@@ -477,6 +477,19 @@
             }
         },
 
+        addLinkToExternalData: function (el, url) {
+                var i,j;
+
+            if (el.nodeName.toLowerCase() === 'a') {
+                el.setAttribute('data-external', 'bcm://link?url=' + url);
+            } else {
+                el = el.getElementsByTagName('a');
+                for (i = 0; i < el.length; i += 1) {
+                    el[i].setAttribute('data-external', 'bcm://link?url=' + url);
+                }
+            }
+        },
+
         isListItem: function (node) {
             if (!node) {
                 return false;

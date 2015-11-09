@@ -882,6 +882,19 @@ MediumEditor.extensions = {};
             }
         },
 
+        addLinkToExternalData: function (el, url) {
+                var i,j;
+
+            if (el.nodeName.toLowerCase() === 'a') {
+                el.setAttribute('data-external', 'bcm://link?url=' + url);
+            } else {
+                el = el.getElementsByTagName('a');
+                for (i = 0; i < el.length; i += 1) {
+                    el[i].setAttribute('data-external', 'bcm://link?url=' + url);
+                }
+            }
+        },
+
         isListItem: function (node) {
             if (!node) {
                 return false;
@@ -7516,6 +7529,8 @@ LINK_REGEXP_TEXT =
 
                         if(opts.documentId) {
                             MediumEditor.util.addDocumentIdToAnchors(MediumEditor.selection.getSelectionStart(this.options.ownerDocument), opts.documentId);
+                        } else {
+                            MediumEditor.util.addLinkToExternalData(MediumEditor.selection.getSelectionStart(this.options.ownerDocument), opts.url);
                         }
                     }
                 }
@@ -7591,7 +7606,7 @@ MediumEditor.parseVersionString = function (release) {
 
 MediumEditor.version = MediumEditor.parseVersionString.call(this, ({
     // grunt-bump looks for this:
-    'version': '5.6.26'
+    'version': '5.6.27'
 }).version);
 
     return MediumEditor;
