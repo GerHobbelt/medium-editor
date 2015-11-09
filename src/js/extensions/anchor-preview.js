@@ -124,7 +124,11 @@
 
             var extensionName = 'anchor';
             if(activeAnchor.getAttribute('data-external')) {
-              extensionName = 'anchorDocument';
+              if(activeAnchor.getAttribute('data-external') === 'bcm://calendar') {
+                extensionName = 'anchorCalendar';
+              } else {
+                extensionName = 'anchorDocument';
+              }
             }
             var anchorExtension = this.base.getExtensionByName(extensionName);
                 
@@ -144,7 +148,9 @@
                             buttonClass: activeAnchor.getAttribute('class'),
                             documentId: activeAnchor.attributes.href.value
                         };
-                        anchorExtension.showForm(opts);
+                        if(typeof anchorExtension.showForm === 'function') {
+                          anchorExtension.showForm(opts);
+                        }
                         activeAnchor = null;
                     }
                 }.bind(this));

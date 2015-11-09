@@ -701,6 +701,9 @@
                     merged = MediumEditor.util.extend({}, this.options.anchorDocument, opts);
                     extension = new MediumEditor.extensions.anchorDocument(merged);
                     break;
+                case 'anchorCalendar':
+                    extension = new MediumEditor.extensions.anchorCalendar();
+                    break;
                 case 'anchor-preview':
                     extension = new MediumEditor.extensions.anchorPreview(this.options.anchorPreview);
                     break;
@@ -1020,6 +1023,8 @@
 
                         if(opts.documentId) {
                             MediumEditor.util.addDocumentIdToAnchors(MediumEditor.selection.getSelectionStart(this.options.ownerDocument), opts.documentId);
+                        } else if(opts.appName) {
+                            MediumEditor.util.addAppNameToAnchors(MediumEditor.selection.getSelectionStart(this.options.ownerDocument), opts.appName);
                         } else {
                             MediumEditor.util.addLinkToExternalData(MediumEditor.selection.getSelectionStart(this.options.ownerDocument), opts.url);
                         }

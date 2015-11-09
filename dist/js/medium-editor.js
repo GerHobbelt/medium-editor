@@ -882,6 +882,19 @@ MediumEditor.extensions = {};
             }
         },
 
+        addAppNameToAnchors: function (el, appName) {
+                var i,j;
+
+            if (el.nodeName.toLowerCase() === 'a') {
+                el.setAttribute('data-external', 'bcm://' + appName);
+            } else {
+                el = el.getElementsByTagName('a');
+                for (i = 0; i < el.length; i += 1) {
+                    el[i].setAttribute('data-external', 'bcm://' + appName);
+                }
+            }
+        },
+
         addLinkToExternalData: function (el, url) {
                 var i,j;
 
@@ -3845,7 +3858,11 @@ MediumEditor.extensions = {};
 
             var extensionName = 'anchor';
             if(activeAnchor.getAttribute('data-external')) {
-              extensionName = 'anchorDocument';
+              if(activeAnchor.getAttribute('data-external') === 'bcm://calendar') {
+                extensionName = 'anchorCalendar';
+              } else {
+                extensionName = 'anchorDocument';
+              }
             }
             var anchorExtension = this.base.getExtensionByName(extensionName);
                 
@@ -3865,7 +3882,9 @@ MediumEditor.extensions = {};
                             buttonClass: activeAnchor.getAttribute('class'),
                             documentId: activeAnchor.attributes.href.value
                         };
-                        anchorExtension.showForm(opts);
+                        if(typeof anchorExtension.showForm === 'function') {
+                          anchorExtension.showForm(opts);
+                        }
                         activeAnchor = null;
                     }
                 }.bind(this));
@@ -7210,6 +7229,9 @@ LINK_REGEXP_TEXT =
                     merged = MediumEditor.util.extend({}, this.options.anchorDocument, opts);
                     extension = new MediumEditor.extensions.anchorDocument(merged);
                     break;
+                case 'anchorCalendar':
+                    extension = new MediumEditor.extensions.anchorCalendar();
+                    break;
                 case 'anchor-preview':
                     extension = new MediumEditor.extensions.anchorPreview(this.options.anchorPreview);
                     break;
@@ -7529,6 +7551,8 @@ LINK_REGEXP_TEXT =
 
                         if(opts.documentId) {
                             MediumEditor.util.addDocumentIdToAnchors(MediumEditor.selection.getSelectionStart(this.options.ownerDocument), opts.documentId);
+                        } else if(opts.appName) {
+                            MediumEditor.util.addAppNameToAnchors(MediumEditor.selection.getSelectionStart(this.options.ownerDocument), opts.appName);
                         } else {
                             MediumEditor.util.addLinkToExternalData(MediumEditor.selection.getSelectionStart(this.options.ownerDocument), opts.url);
                         }
@@ -7606,7 +7630,7 @@ MediumEditor.parseVersionString = function (release) {
 
 MediumEditor.version = MediumEditor.parseVersionString.call(this, ({
     // grunt-bump looks for this:
-    'version': '5.6.27'
+    'version': '5.6.28'
 }).version);
 
     return MediumEditor;
