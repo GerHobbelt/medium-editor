@@ -23,7 +23,7 @@ module.exports = function (grunt) {
             'src/js/extensions/form.js',
             'src/js/extensions/anchor.js',
             'src/js/extensions/anchor-document.js',
-            'src/js/extensions/anchor-anchor.js',
+            'src/js/extensions/anchor-calendar.js',
             'src/js/extensions/anchor-preview.js',
             'src/js/extensions/auto-link.js',
             'src/js/extensions/file-dragging.js',
