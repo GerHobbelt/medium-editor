@@ -1020,6 +1020,8 @@
 
                         if(opts.documentId) {
                             MediumEditor.util.addDocumentIdToAnchors(MediumEditor.selection.getSelectionStart(this.options.ownerDocument), opts.documentId);
+                        } else {
+                            MediumEditor.util.addLinkToExternalData(MediumEditor.selection.getSelectionStart(this.options.ownerDocument), opts.url);
                         }
                     }
                 }
