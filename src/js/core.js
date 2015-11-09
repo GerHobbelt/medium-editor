@@ -1028,6 +1028,15 @@
                         } else {
                             MediumEditor.util.addLinkToExternalData(MediumEditor.selection.getSelectionStart(this.options.ownerDocument), opts.url);
                         }
+
+                        var blurEvent = new MouseEvent('blur', {
+                            'view': window,
+                            'bubbles': true,
+                            'cancelable': true
+                        });
+
+                        currentEditor = MediumEditor.selection.getSelectionElement(this.options.contentWindow);
+                        currentEditor.dispatchEvent(blurEvent);
                     }
                 }
                 // Fire input event for backwards compatibility if anyone was listening directly to the DOM input event

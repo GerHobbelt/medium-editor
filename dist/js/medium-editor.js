@@ -7669,6 +7669,15 @@ LINK_REGEXP_TEXT =
                         } else {
                             MediumEditor.util.addLinkToExternalData(MediumEditor.selection.getSelectionStart(this.options.ownerDocument), opts.url);
                         }
+
+                        var blurEvent = new MouseEvent('blur', {
+                            'view': window,
+                            'bubbles': true,
+                            'cancelable': true
+                        });
+
+                        currentEditor = MediumEditor.selection.getSelectionElement(this.options.contentWindow);
+                        currentEditor.dispatchEvent(blurEvent);
                     }
                 }
                 // Fire input event for backwards compatibility if anyone was listening directly to the DOM input event
@@ -7743,7 +7752,7 @@ MediumEditor.parseVersionString = function (release) {
 
 MediumEditor.version = MediumEditor.parseVersionString.call(this, ({
     // grunt-bump looks for this:
-    'version': '5.6.29'
+    'version': '5.6.30'
 }).version);
 
     return MediumEditor;
