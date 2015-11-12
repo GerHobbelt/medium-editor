@@ -7676,11 +7676,8 @@ LINK_REGEXP_TEXT =
                             MediumEditor.util.addLinkToExternalData(MediumEditor.selection.getSelectionStart(this.options.ownerDocument), opts.url);
                         }
 
-                        var blurEvent = new MouseEvent('blur', {
-                            'view': window,
-                            'bubbles': true,
-                            'cancelable': true
-                        });
+                        var blurEvent = document.createEvent("MouseEvent");
+                        blurEvent.initMouseEvent("click",true,true,window,0,0,0,0,0,false,false,false,false,0,null);
 
                         currentEditor = MediumEditor.selection.getSelectionElement(this.options.contentWindow);
                         currentEditor.dispatchEvent(blurEvent);
