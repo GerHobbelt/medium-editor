@@ -1013,6 +1013,12 @@
                             this.options.ownerDocument.execCommand('createLink', false, opts.url);
                         }
 
+                        var createdLink = MediumEditor.selection.getSelectionStart(this.options.ownerDocument)
+
+                        if(createdLink.innerHTML === createdLink.getAttribute('href')) {
+                            createdLink.remove();
+                        }
+
                         if (this.options.targetBlank || opts.target === '_blank') {
                             MediumEditor.util.setTargetBlank(MediumEditor.selection.getSelectionStart(this.options.ownerDocument), opts.url);
                         }

@@ -7654,6 +7654,12 @@ LINK_REGEXP_TEXT =
                             this.options.ownerDocument.execCommand('createLink', false, opts.url);
                         }
 
+                        var createdLink = MediumEditor.selection.getSelectionStart(this.options.ownerDocument)
+
+                        if(createdLink.innerHTML === createdLink.getAttribute('href')) {
+                            createdLink.remove();
+                        }
+
                         if (this.options.targetBlank || opts.target === '_blank') {
                             MediumEditor.util.setTargetBlank(MediumEditor.selection.getSelectionStart(this.options.ownerDocument), opts.url);
                         }
@@ -7752,7 +7758,7 @@ MediumEditor.parseVersionString = function (release) {
 
 MediumEditor.version = MediumEditor.parseVersionString.call(this, ({
     // grunt-bump looks for this:
-    'version': '5.6.30'
+    'version': '5.6.31'
 }).version);
 
     return MediumEditor;
