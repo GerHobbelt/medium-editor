@@ -34,7 +34,7 @@
         'underline': {
             name: 'underline',
             action: 'underline',
-            aria: 'Sousligné',
+            aria: 'Souligné',
             tagNames: ['u'],
             style: {
                 prop: 'text-decoration',

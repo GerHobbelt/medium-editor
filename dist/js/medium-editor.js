@@ -2777,7 +2777,7 @@ MediumEditor.extensions = {};
         'underline': {
             name: 'underline',
             action: 'underline',
-            aria: 'Sousligné',
+            aria: 'Souligné',
             tagNames: ['u'],
             style: {
                 prop: 'text-decoration',
@@ -7755,7 +7755,7 @@ MediumEditor.parseVersionString = function (release) {
 
 MediumEditor.version = MediumEditor.parseVersionString.call(this, ({
     // grunt-bump looks for this:
-    'version': '5.6.31'
+    'version': '5.6.33'
 }).version);
 
     return MediumEditor;
