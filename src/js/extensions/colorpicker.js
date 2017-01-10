@@ -8,6 +8,12 @@
         aria: 'Sélectionner une couleur pour le texte',
         contentDefault: 'Color', // ±
         contentFA: '<i class="fa fa-paint-brush"></i>',
+        defaultColor: 'fffaed',
+
+        // returns default color setted in parameters or default property defaultColor
+        getDefaultColor: function() {
+            return this.getEditorOption('defaultColor') || this.defaultColor;
+        },
 
         init: function () {
             MediumEditor.extensions.form.prototype.init.apply(this, arguments);
@@ -46,7 +52,7 @@
         },
 
         showForm: function (color) {
-            
+
             var input = this.getInput();
 
             this.base.saveSelection();
@@ -107,7 +113,7 @@
             input.setAttribute('type', 'text');
             input.className = 'medium-editor-toolbar-input editor-colorpicker-input color{pickerClosable:true, pickerPosition:\'left\', onImmediateChange:\'window.handleColorChange(this)\'}';
             input.id = 'color_picker_' + this.getEditorId();
-            input.value = 'fffaed';
+            input.value = this.getDefaultColor();
             form.appendChild(input);
 
             var self = this;
