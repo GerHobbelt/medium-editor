@@ -4911,6 +4911,12 @@ LINK_REGEXP_TEXT =
         aria: 'Sélectionner une couleur pour le texte',
         contentDefault: 'Color', // ±
         contentFA: '<i class="fa fa-paint-brush"></i>',
+        defaultColor: 'fffaed',
+
+        // returns default color setted in parameters or default property defaultColor
+        getDefaultColor: function() {
+            return this.getEditorOption('defaultColor') || this.defaultColor;
+        },
 
         init: function () {
             MediumEditor.extensions.form.prototype.init.apply(this, arguments);
@@ -4949,7 +4955,7 @@ LINK_REGEXP_TEXT =
         },
 
         showForm: function (color) {
-            
+
             var input = this.getInput();
 
             this.base.saveSelection();
@@ -5010,7 +5016,7 @@ LINK_REGEXP_TEXT =
             input.setAttribute('type', 'text');
             input.className = 'medium-editor-toolbar-input editor-colorpicker-input color{pickerClosable:true, pickerPosition:\'left\', onImmediateChange:\'window.handleColorChange(this)\'}';
             input.id = 'color_picker_' + this.getEditorId();
-            input.value = 'fffaed';
+            input.value = this.getDefaultColor();
             form.appendChild(input);
 
             var self = this;
@@ -5082,6 +5088,7 @@ LINK_REGEXP_TEXT =
 
     MediumEditor.extensions.colorPicker = colorPickerForm;
 }());
+
 (function () {
     'use strict';
     /*jslint regexp: true*/
@@ -7734,7 +7741,8 @@ LINK_REGEXP_TEXT =
         ownerDocument: document,
         targetBlank: false,
         extensions: {},
-        spellcheck: true
+        spellcheck: true,
+        defaultColor: 'fffaed'
     };
 })();
 
@@ -7755,7 +7763,7 @@ MediumEditor.parseVersionString = function (release) {
 
 MediumEditor.version = MediumEditor.parseVersionString.call(this, ({
     // grunt-bump looks for this:
-    'version': '5.6.33'
+    'version': '5.6.35'
 }).version);
 
     return MediumEditor;
