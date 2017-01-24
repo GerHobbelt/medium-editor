@@ -3978,7 +3978,7 @@ MediumEditor.extensions = {};
               }
             }
             var anchorExtension = this.base.getExtensionByName(extensionName);
-                
+
 
             if (anchorExtension && activeAnchor) {
                 event.preventDefault();
@@ -4789,9 +4789,9 @@ LINK_REGEXP_TEXT =
                 remove = doc.createElement('a'),
                 save = doc.createElement('a'),
                 ul = doc.createElement('ul'),
-                iconList = ['gear', 'puzzle', 
-                    'calc', 'plus', 'plane' , 'search'];
-
+                iconList = ['gear', 'puzzle',
+                    'calc', 'plus', 'plane' , 'search'],
+                customizedIconList = this.getEditorOption('customizedIcons') || [];
 
             // Font Size Form (div)
             form.className = 'medium-editor-toolbar-form';
@@ -4812,6 +4812,15 @@ LINK_REGEXP_TEXT =
                 li.innerHTML = '<span class="icon-' + iconList[i] + '"></span>';
                 li.setAttribute('data-icon', iconList[i]);
                 this.on(li, 'click', this.handleIconChange.bind(this, iconList[i]));
+                ul.appendChild(li);
+            }
+
+            // contains url to pictures
+            for (var i in customizedIconList) {
+                var li = doc.createElement('li');
+                li.innerHTML = '<span style="background-image: url(\'' + customizedIconList[i] + '\');"></span>';
+                li.setAttribute('data-icon', customizedIconList[i]);
+                this.on(li, 'click', this.handleIconChange.bind(this, customizedIconList[i]));
                 ul.appendChild(li);
             }
 
@@ -4949,7 +4958,7 @@ LINK_REGEXP_TEXT =
         },
 
         showForm: function (color) {
-            
+
             var input = this.getInput();
 
             this.base.saveSelection();
@@ -6329,8 +6338,8 @@ LINK_REGEXP_TEXT =
                 if(icon === 'none' && this.getListElements().length > 0) {
                     this.execAction('insertunorderedlist');
                 }
-            } 
-            
+            }
+
             this.getListElements().forEach(function(el) {
                 var regx = new RegExp('\\blist-.*?\\b', 'g');
                 el.className = el.className.replace(regx, '');
@@ -6375,10 +6384,10 @@ LINK_REGEXP_TEXT =
 
             if(startEl === endEl) {
                 // If 1 element in selection
-                
+
                 var el = startEl;
 
-                for ( ; el && el !== document; el = el.parentNode ) {   
+                for ( ; el && el !== document; el = el.parentNode ) {
                     if ( typeof el.tagName !== 'undefined' && el.tagName.toLowerCase() === 'li') {
                         elements.push(el);
                         break;
@@ -6395,9 +6404,9 @@ LINK_REGEXP_TEXT =
                         elements.push(el);
                     }
                 }
-            } 
+            }
 
-            return elements; 
+            return elements;
         }
     });
 
@@ -6451,7 +6460,7 @@ LINK_REGEXP_TEXT =
         },
 
         showForm: function (color) {
-            
+
             var input = this.getInput();
 
             /*var targetElement = window.getSelection().focusNode.parentElement;
@@ -6493,10 +6502,10 @@ LINK_REGEXP_TEXT =
 
             if(startEl === endEl) {
                 // If 1 element in selection
-                
+
                 var el = startEl;
 
-                for ( ; el && el !== document; el = el.parentNode ) {   
+                for ( ; el && el !== document; el = el.parentNode ) {
                     if ( typeof el.tagName !== 'undefined' && el.tagName.toLowerCase() === 'li') {
                         elements.push(el);
                         break;
@@ -6513,9 +6522,9 @@ LINK_REGEXP_TEXT =
                         elements.push(el);
                     }
                 }
-            } 
+            }
 
-            return elements; 
+            return elements;
         },
 
         // Called by core when tearing down medium-editor (destroy)
@@ -6610,7 +6619,7 @@ LINK_REGEXP_TEXT =
                 el.id = elementId;
                 el.setAttribute('data-bullet-color', editor.toString());
             });
-            
+
             document.styleSheets[0].insertRule('.product-sheet .diapo__container ul li#' + elementId + ':before { color: #' + editor.toString() + ' !important}', document.styleSheets[0].cssRules.length);
             this.handleCloseClick.bind(this);
             this.doFormSave();
