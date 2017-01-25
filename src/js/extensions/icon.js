@@ -92,8 +92,9 @@
                 remove = doc.createElement('a'),
                 save = doc.createElement('a'),
                 ul = doc.createElement('ul'),
-                iconList = ['gear', 'puzzle', 
-                    'calc', 'plus', 'plane' , 'search'];
+                iconList = ['gear', 'puzzle',
+                    'calc', 'plus', 'plane' , 'search'],
+                customizedIconList = this.getEditorOption('customizedIcons') || [];
 
 
             // Font Size Form (div)
@@ -115,6 +116,14 @@
                 li.innerHTML = '<span class="icon-' + iconList[i] + '"></span>';
                 li.setAttribute('data-icon', iconList[i]);
                 this.on(li, 'click', this.handleIconChange.bind(this, iconList[i]));
+                ul.appendChild(li);
+            }
+
+            for (var i in customizedIconList) {
+                var li = doc.createElement('li');
+                li.innerHTML = '<span style="background-image: url(\'' + customizedIconList[i] + '\');"></span>';
+                li.setAttribute('data-icon', customizedIconList[i]);
+                this.on(li, 'click', this.handleIconChange.bind(this, customizedIconList[i]));
                 ul.appendChild(li);
             }
 

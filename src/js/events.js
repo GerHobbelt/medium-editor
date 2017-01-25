@@ -4,6 +4,13 @@
     var Events = function (instance) {
         this.base = instance;
         this.options = this.base.options;
+
+        // customed ID
+        if (this.options.id) {
+            this.base.id = this.options.id;
+            instance.id = this.options.id;
+        }
+
         this.events = [];
         this.disabledEvents = {};
         this.customEvents = {};
